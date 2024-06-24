@@ -1,0 +1,160 @@
+---
+title: "Weclome to the Tidyverse"
+format:
+  revealjs: 
+    theme: custom.scss
+    slide-number: true
+    logo: OPTlogo.png
+editor: visual
+---
+
+## Tidyverse
+
+Meta package that includes packages:
+
+::: columns
+::: {.column width="50%"}
+::: incremental
+-   tidyr
+
+-   readr
+
+-   forcats
+
+-   ggplot2
+:::
+:::
+
+::: {.column width="30%"}
+::: incremental
+-   dplyr
+
+-   tibble
+
+-   stringr
+
+-   purrr
+:::
+:::
+
+![](tidypackagesImages.png){.absolute top="200" left="700" width="500" height="400"}
+:::
+
+## Objective
+
+Across multiple projects, how many hours are spent on each task?
+
+![](finalplot.png){.absolute right="50"}
+
+## readr
+
+```{r}
+#| echo: true
+#| output-location: slide
+#| code-line-numbers: "|1|3|5"
+library(tidyverse)
+
+project_data <- read_csv("project_data.csv")
+
+head(project_data)
+```
+
+## tidyr
+
+```{r}
+#| echo: true
+#| output-location: slide
+#| code-line-numbers: "7-10"
+library(tidyverse)
+
+project_data <- read_csv("project_data.csv")
+
+#head(project_data)
+
+project_data <- project_data %>% 
+  drop_na()
+
+head(project_data,15)
+
+
+```
+
+## dplyr {.scrollable}
+
+```{r}
+#| echo: true
+#| output-location: slide
+#| code-line-numbers: "12-19"
+library(tidyverse)
+
+project_data <- read_csv("project_data.csv")
+
+#head(project_data)
+
+project_data <- project_data %>% 
+  drop_na()
+
+#head(project_data,15)
+
+project_data <- project_data %>% 
+  mutate(percent_of_budget_used = (Actuals/Budget)*100) %>% 
+  select(-1) %>% 
+  rename(Project = ProjectA)
+
+print(project_data)
+
+glimpse(project_data)
+
+```
+
+## ggplot2
+
+::: center
+```{r}
+#| echo: true
+
+ggplot(data = project_data,mapping = aes(x = Task, y = Actuals))+
+  geom_col()+
+  theme_bw()
+```
+:::
+
+## ggplot2
+
+```{r}
+#| echo: true
+#| code-line-numbers: "4"
+
+ggplot(data = project_data,mapping = aes(x = Task, y = Actuals))+
+  geom_col()+
+  theme_bw()+
+  facet_wrap(facets = vars(Project),scales = "free",ncol = 3)
+  
+```
+
+## Making it Pretty
+
+```{r}
+windowsFonts(`Century Gothic` = windowsFont("Century Gothic"))
+
+g<- ggplot(data = project_data,mapping = aes(x = Task, y = Actuals))+
+  geom_col(stat="identity",fill="darkgreen")+
+  theme_bw()+
+  facet_wrap(facets = vars(Project),scales = "free",ncol = 3)+
+  ggtitle(label = "Hours Spent on Each Project")+
+  ylab("Actual Hours")+
+  theme(strip.background.x = element_blank(),
+        axis.text.x = element_text(angle = 35,size = 9,vjust = 1.1,hjust = 1),
+        text = element_text(size = 12, family = "serif"),
+        plot.title = element_text(size = 15, family = "Century Gothic"),
+        panel.background = element_rect(fill='#f0f1eb'),                 # this color matches my background color in the .scss
+        plot.background = element_rect(fill='#f0f1eb', color="#f0f1eb")) # Makes it belend into the slide nicely 
+
+g
+
+#ggsave(plot = g,filename = "finalplot.png")
+```
+
+## More Projects
+
+[Click to view source code and other projects](https://github.com/ADK-OPT)

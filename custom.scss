@@ -1,0 +1,29 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: "Century Gothic", "Century Gothic", Palatino,
+  FreeSerif, serif !default;
+
+// colors
+$body-bg: #f0f1eb !default;
+$body-color: #000 !default;
+$link-color: #6495ed !default;
+$selection-bg: #26351c !default;
+
+// headings
+$presentation-heading-font: "Century Gothic", "Century Gothic", Palatino,
+  FreeSerif, serif !default;
+$presentation-heading-color: #006400 !default;
+
+/*-- scss:rules --*/
+
+.reveal a {
+  line-height: 1.3em;
+}
+
+.reveal .slide-logo {
+  height: 50px !important;
+  width: 50px !important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
